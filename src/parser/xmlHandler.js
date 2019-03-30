@@ -649,7 +649,12 @@ class XMLHandler {
             top.object[elementName] = [val, current.object];
           }
         } else {
-          top.object[elementName] = current.object;
+          // create array even for single `isMany` element 
+          let value = current.object;
+          if (current.descriptor && current.descriptor.isMany) {
+            value = [value];
+          }
+          top.object[elementName] = value;
         }
       }
       if (current.id != null) {
